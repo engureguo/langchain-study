@@ -1,0 +1,27 @@
+Three interrelated high-severity security flaws discovered in Kubernetes could be exploited to achieve remote code execution with elevated privileges on Windows endpoints within a cluster.
+
+The issues, tracked as CVE-2023-3676, CVE-2023-3893, and CVE-2023-3955, carry CVSS scores of 8.8 and impact all Kubernetes environments with Windows nodes. Fixes for the vulnerabilities were released on August 23, 2023, following responsible disclosure by Akamai on July 13, 2023.
+
+"The vulnerability allows remote code execution with SYSTEM privileges on all Windows endpoints within a Kubernetes cluster," Akamai security researcher Tomer Peled said in a technical write-up shared with The Hacker News. "To exploit this vulnerability, the attacker needs to apply a malicious YAML file on the cluster."
+
+Amazon Web Services (AWS), Google Cloud, and Microsoft Azure have all released advisories for the bugs, which affect the following versions of Kubelet -
+
+kubelet < v1.28.1
+kubelet < v1.28.1
+kubelet < v1.27.5
+kubelet < v1.26.8
+kubelet < v1.25.13, and
+kubelet < v1.24.17
+In a nutshell, CVE-2023-3676 allows an attacker with 'apply' privileges -- which makes it possible to interact with the Kubernetes API -- to inject arbitrary code that will be executed on remote Windows machines with SYSTEM privileges.
+
+"CVE-2023-3676 requires low privileges and, therefore, sets a low bar for attackers: All they need to have is access to a node and apply privileges," Peled noted.
+
+The vulnerability, along with CVE-2023-3955, arises as a result of a lack of input sanitization, thereby enabling a specially crafted path string to be parsed as a parameter to a PowerShell command, effectively leading to command execution.
+
+CVE-2023-3893, on the other hand, relates to a case of privilege escalation in the Container Storage Interface (CSI) proxy that allows a malicious actor to obtain administrator access on the node.
+
+"A recurring theme among these vulnerabilities is a lapse in input sanitization in the Windows-specific porting of the Kubelet," Kubernetes security platform ARMO highlighted last month.
+
+"Specifically, when handling Pod definitions, the software fails to adequately validate or sanitize user inputs. This oversight enables malicious users to craft pods with environment variables and host paths that, when processed, lead to undesired behaviors, such as privilege escalation."
+
+Found this article interesting? Follow us on Twitter  and LinkedIn to read more exclusive content we post.
